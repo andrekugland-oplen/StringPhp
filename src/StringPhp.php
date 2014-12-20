@@ -30,7 +30,7 @@ class StringPhp implements JsonSerializable, Serializable {
 
 	public $s;
 
-	// -----------------------------[ Constructor and magic methods ]----------------------------- //
+	// ----------------------------[ Constructor and magical methods ]---------------------------- //
 
 	// Constructor
 	function __construct($str = '', $encoding = 'UTF-8') {
