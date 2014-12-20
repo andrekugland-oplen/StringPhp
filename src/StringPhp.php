@@ -24,8 +24,6 @@
 * DEALINGS IN THE SOFTWARE.
 */
 
-namespace Kugland\StringPhp;
-
 mb_internal_encoding('UTF-8');
 
 class StringPhp implements \JsonSerializable, \Serializable {
