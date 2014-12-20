@@ -26,7 +26,7 @@
 
 mb_internal_encoding('UTF-8');
 
-class StringPhp implements \JsonSerializable, \Serializable {
+class StringPhp implements JsonSerializable, Serializable {
 
 	public $s;
 
