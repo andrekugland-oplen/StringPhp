@@ -1,0 +1,12 @@
+{
+    "name": "kugland/string-php",
+    "description": "Unicode string class",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "André von Kugland",
+            "email": "kugland@gmail.com"
+        }
+    ],
+    "require": {}
+}
