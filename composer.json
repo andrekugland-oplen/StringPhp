@@ -1,16 +1,21 @@
 {
-    "name": "kugland/string-php",
-    "description": "Unicode string class",
-    "keywords": ["string", "unicode"],
-    "license": "MIT",
-    "type": "library",
-    "authors": [
-        {
-            "name": "André von Kugland",
-            "email": "kugland@gmail.com"
-        }
-    ],
-    "require": {
-        "php": ">=5.3"
-    }
+	"name": "kugland/string-php",
+	"description": "Unicode string class",
+	"keywords": ["string", "unicode"],
+	"license": "MIT",
+	"type": "library",
+	"authors": [
+		{
+			"name": "André von Kugland",
+			"email": "kugland@gmail.com"
+		}
+	],
+	"require": {
+		"php": ">=5.3"
+	},
+	"autoload": {
+		"psr-4": {
+			"Kugland\\StringPhp\\": "src/"
+		}
+	}
 }
