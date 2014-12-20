@@ -24,9 +24,11 @@
 * DEALINGS IN THE SOFTWARE.
 */
 
+namespace Kugland\StringPhp;
+
 mb_internal_encoding('UTF-8');
 
-class S implements JsonSerializable, Serializable {
+class StringPhp implements JsonSerializable, Serializable {
 
 	public $s;
 
@@ -554,6 +556,6 @@ class S implements JsonSerializable, Serializable {
 }
 
 // Create a new StringPhp object.
-function S($str, $encoding = 'UTF-8') {
-	return new S($str, $encoding);
+function StringPhp($str, $encoding = 'UTF-8') {
+	return new StringPhp($str, $encoding);
 }
