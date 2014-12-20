@@ -28,7 +28,7 @@ namespace Kugland\StringPhp;
 
 mb_internal_encoding('UTF-8');
 
-class StringPhp implements JsonSerializable, Serializable {
+class StringPhp implements \JsonSerializable, \Serializable {
 
 	public $s;
 
@@ -270,7 +270,7 @@ class StringPhp implements JsonSerializable, Serializable {
 	// Replaces substrings according to a given table.
 	function replaceMany(array $table, $limit = -1) {
 		return $this->replaceRegexCallback(
-			S::makeRegex(array_keys($table)),
+			self::makeRegex(array_keys($table)),
 			function ($matches) use ($table) {
 				return $table[$matches[0]];
 			},
@@ -556,6 +556,6 @@ class StringPhp implements JsonSerializable, Serializable {
 }
 
 // Create a new StringPhp object.
-function StringPhp($str, $encoding = 'UTF-8') {
+function S($str, $encoding = 'UTF-8') {
 	return new StringPhp($str, $encoding);
 }
