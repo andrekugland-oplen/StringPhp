@@ -99,6 +99,7 @@ class BasicTest extends PHPUnit_Framework_TestCase
 		$this->assertSame(S('a')->times(4)->s, 'aaaa');
 		$this->assertSame(S('ǌam')->title()->s, 'ǋam');
 		$this->assertSame(S('ßam')->title()->s, 'Ssam');
+		$this->assertSame(S('διονύσιος ὁ ἀρεοπαγίτες')->title()->s, 'Διονύσιος Ὁ Ἀρεοπαγίτες');
 		$this->assertSame(S('ebg13 vf vafrpher')->translate('abefghprv', 'norstucei')->s, 'rot13 is insecure');
 		$this->assertSame(S('ǌam')->upper()->s, 'ǊAM');		
 	}
