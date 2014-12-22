@@ -26,7 +26,7 @@
 
 mb_internal_encoding('UTF-8');
 
-class StringPhp implements JsonSerializable, Serializable {
+class S implements Serializable, JsonSerializable {
 
 	public $s;
 
@@ -45,14 +45,6 @@ class StringPhp implements JsonSerializable, Serializable {
 	}
 
 
-	// -------------------------------[ JsonSerializable interface ]------------------------------ //
-
-	// JsonSerializable::JsonSerialize()
-	function JsonSerialize() {
-		return $this->s;
-	}
-
-
 	// ---------------------------------[ Serializable interface ]-------------------------------- //
 
 	// Serializable::serialize()
@@ -63,6 +55,14 @@ class StringPhp implements JsonSerializable, Serializable {
 	// Serializable::unserialize($serialized)
 	function unserialize($serialized) {
 		$this->s = unserialize($serialized);
+	}
+
+
+	// -------------------------------[ JsonSerializable interface ]------------------------------ //
+
+	// JsonSerializable::JsonSerialize()
+	function JsonSerialize() {
+		return $this->s;
 	}
 
 
@@ -80,7 +80,7 @@ class StringPhp implements JsonSerializable, Serializable {
 
 	// Creates an instance of S from a given list of Unicode points.
 	static function fromCharCodeArray(array $list) {
-		return S(call_user_func_array('pack',	array_merge(['N*'], $list)), 'UCS-4BE');
+		return S(call_user_func_array('pack',	array_merge(array('N*'), $list)), 'UCS-4BE');
 	}
 
 	// Creates an instance of S from a Json object.
@@ -131,7 +131,8 @@ class StringPhp implements JsonSerializable, Serializable {
 
 	// Gets the Unicode point of the nth character of the string.
 	function charCodeAt($n) {
-		return unpack('N', mb_convert_encoding($this->charAt($n), 'UCS-4BE', 'UTF-8'))[1];
+		$tmp = unpack('N', mb_convert_encoding($this->charAt($n), 'UCS-4BE', 'UTF-8'));
+		return $tmp[1];
 	}
 
 	// Compares two strings.
@@ -400,7 +401,6 @@ class StringPhp implements JsonSerializable, Serializable {
 
 	// Tests if string is punctuation.
 	function isPunct($unicode = true) {
-		//echo $this->countRegex("/^[[:punct:]]+$/".($unicode ? 'u' : ''));
 		return $this->countRegex("/^[[:punct:]]+$/".($unicode ? 'u' : '')) === 1;
 	}
 
@@ -485,7 +485,7 @@ class StringPhp implements JsonSerializable, Serializable {
 
 	// Matches a string against $regex.
 	function match($regex) {
-		$matches = [];
+		$matches = null;
 		if (preg_match($regex, $this->s, $matches) !== false) {
 			return $matches;
 		} else {
@@ -555,5 +555,5 @@ class StringPhp implements JsonSerializable, Serializable {
 
 // Create a new StringPhp object.
 function S($str, $encoding = 'UTF-8') {
-	return new StringPhp($str, $encoding);
+	return new S($str, $encoding);
 }

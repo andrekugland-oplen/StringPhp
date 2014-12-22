@@ -15,5 +15,8 @@
 	},
 	"autoload": {
 		"files": ["src/StringPhp.php"]
+	},
+	"require-dev": {
+		"phpunit/phpunit": "@dev"
 	}
 }
