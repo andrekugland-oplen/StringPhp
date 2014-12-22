@@ -44,6 +44,7 @@ class S implements Serializable, JsonSerializable {
     return $this->s;
   }
 
+
   // ---------------------------------[ Serializable interface ]-------------------------------- //
 
   // Serializable::serialize()
@@ -56,12 +57,14 @@ class S implements Serializable, JsonSerializable {
     $this->s = unserialize($serialized);
   }
 
+
   // -------------------------------[ JsonSerializable interface ]------------------------------ //
 
   // JsonSerializable::JsonSerialize()
   function JsonSerialize() {
     return $this->s;
   }
+
 
   // --------------------------------------[ Conversions ]-------------------------------------- //
 
@@ -112,6 +115,7 @@ class S implements Serializable, JsonSerializable {
   function toRegex() {
     return self::makeRegex(array($this));
   }
+
 
   // -------------------------------------[ Basic methods ]------------------------------------- //
 
@@ -322,7 +326,7 @@ class S implements Serializable, JsonSerializable {
       }
       return $this->replaceMany($table);
     } else {
-      throw new RuntimeException('S::translate(): Lengths of $set1 and $set2 differ');
+      throw new RuntimeException("S::translate(): Lengths of \$set1 and \$set2 differ");
     }
   }
 
@@ -338,6 +342,7 @@ class S implements Serializable, JsonSerializable {
   function upper() {
     return S(mb_convert_case($this->replaceMany(self::$upperTable), MB_CASE_UPPER));
   }
+
 
   // --------------------------------------[ Test methods ]------------------------------------- //
 
@@ -401,6 +406,7 @@ class S implements Serializable, JsonSerializable {
     return $this->countRegex("/^[[:upper:]]+$/".($unicode ? 'u' : '')) === 1;
   }
 
+
   // ----------------------------------[ Whitespace functions ]--------------------------------- //
 
   // Converts all adjacent whitespace characters to a single space.
@@ -458,6 +464,7 @@ class S implements Serializable, JsonSerializable {
   function trimRight() {
     return $this->replaceRegex('/[\s​]+$/u', '');
   }
+
 
   // -------------------------------[ Regular expression methods ]------------------------------ //
 
