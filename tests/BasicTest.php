@@ -8,17 +8,11 @@ class BasicTest extends PHPUnit_Framework_TestCase
     $this->assertSame(S("\xe1", 'iso-8859-1')->s, 'á');
   }
 
-  /**
-   * @depends testConstructors
-   */
   public function testToString() {
     $this->assertEquals(S('a'), 'a');
     $this->assertNotSame(S('a'), 'a');
   }
 
-  /**
-   * @depends testConstructors
-   */
   public function testSerialize() {
     $this->assertInstanceOf('Serializable', S('a'));
     $this->assertEquals(unserialize(serialize(S('a'))), S('a'));
@@ -26,9 +20,6 @@ class BasicTest extends PHPUnit_Framework_TestCase
     $this->assertSame(json_decode(json_encode(S('a'))), 'a');
   }
 
-  /**
-   * @depends testSerialize
-   */
   public function testConversions() {
     $this->assertSame(S::fromCharArray(array('道','德','經'))->s, '道德經');
     $this->assertSame(S::fromCharCode(0x9053)->s, '道');
@@ -41,9 +32,6 @@ class BasicTest extends PHPUnit_Framework_TestCase
     $this->assertSame(S('ab/cd')->toRegex(), "/ab\\/cd/");
   }
 
-  /**
-   * @depends testConversions
-   */
   public function testBasic() {
     $this->assertSame(S('διονύσιος ὁ ἀρεοπαγίτες')->capitalize()->s, 'Διονύσιος ὁ ἀρεοπαγίτες');
     $this->assertSame(S('Достоевский')->charAt(10), 'й');
@@ -102,5 +90,49 @@ class BasicTest extends PHPUnit_Framework_TestCase
     $this->assertSame(S('διονύσιος ὁ ἀρεοπαγίτες')->title()->s, 'Διονύσιος Ὁ Ἀρεοπαγίτες');
     $this->assertSame(S('ebg13 vf vafrpher')->translate('abefghprv', 'norstucei')->s, 'rot13 is insecure');
     $this->assertSame(S('ǌam')->upper()->s, 'ǊAM');
+  }
+
+  public function testWhitespace() {
+  	$this->assertSame(S('a  b  c')->collapseWhitespace()->s, 'a b c');
+		$this->assertSame(S("a \xc2\xa0 \t b \xc2\xa0 \t c")->collapseWhitespace()->s, 'a b c');
+		$this->assertSame(S('abc')->padCenter(5)->s, ' abc ');
+		$this->assertSame(S('abc')->padLeft(5)->s, '  abc');
+		$this->assertSame(S('abc')->padRight(5)->s, 'abc  ');
+		$this->assertSame(S('abc')->padCenter(5,'á')->s, 'áabcá');
+		$this->assertSame(S('abc')->padLeft(5,'á')->s, 'ááabc');
+		$this->assertSame(S('abc')->padRight(5,'á')->s, 'abcáá');
+		$this->assertSame(S("a\nb")->toDos()->s, "a\r\nb");
+		$this->assertSame(S("a\r\nb")->toDos()->s, "a\r\nb");
+		$this->assertSame(S("a\r\nb")->toUnix()->s, "a\nb");
+		$this->assertSame(S("\t\xc2\xa0 ab \xc2\xa0\t")->trim()->s, "ab");
+		$this->assertSame(S("\t\xc2\xa0 \xc2\xa0\t")->trim()->s, "");
+		$this->assertSame(S("\t\xc2\xa0 ab \xc2\xa0\t")->trimLeft()->s, "ab \xc2\xa0\t");
+		$this->assertSame(S("\t\xc2\xa0 \xc2\xa0\t")->trimRight()->s, '');
+		$this->assertSame(S("\t\xc2\xa0  ab \xc2\xa0\t")->trimRight()->s, "\t\xc2\xa0  ab");
+		$this->assertSame(S("\t\xc2\xa0 \xc2\xa0\t")->trimRight()->s, '');
+  }
+
+  public function testTestAscii() {
+  	$blankAscii = array(9, 32);
+
+		$punctAscii = array(
+			 33,  34,  35,  36,  37,  38,  39,  40,
+			 41,  42,  43,  44,  45,  46,  47,  58,
+			 59,  60,  61,  62,  63,  64,  91,  92,
+			 93,  94,  95,  96, 123, 124, 125, 126
+		);
+
+		for ($i = 0; $i < 256; $i++) {
+			$this->assertEquals(S::fromCharCode($i)->isAlpha(false), S::fromCharCode($i)->countRegex('/[A-Za-z]/') == 1);
+			$this->assertEquals(S::fromCharCode($i)->isAlnum(false), S::fromCharCode($i)->countRegex('/[0-9A-Za-z]/') == 1);
+			$this->assertEquals(S::fromCharCode($i)->isAscii(false), $i < 128);
+			$this->assertEquals(S::fromCharCode($i)->isBlank(false), in_array($i, $blankAscii));
+			$this->assertEquals(S::fromCharCode($i)->isCntrl(false), $i < 32 || $i === 127);
+			$this->assertEquals(S::fromCharCode($i)->isLower(false), S::fromCharCode($i)->countRegex('/[a-z]/') == 1);
+			$this->assertEquals(S::fromCharCode($i)->isNumber(false), S::fromCharCode($i)->countRegex('/[0-9]/') == 1);
+			$this->assertEquals(S::fromCharCode($i)->isUpper(false), S::fromCharCode($i)->countRegex('/[A-Z]/') == 1);
+			$this->assertEquals(S::fromCharCode($i)->isPunct(false), in_array($i, $punctAscii));
+		}
+
   }
 }
