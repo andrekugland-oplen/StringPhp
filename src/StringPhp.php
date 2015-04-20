@@ -30,7 +30,7 @@ class S implements Serializable, JsonSerializable {
 
   public $s;
 
-  // ----------------------------[ Constructor and magical methods ]---------------------------- //
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~[ Constructor and magical methods ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
   // Constructor
   function __construct($str = '', $encoding = 'UTF-8') {
@@ -45,7 +45,7 @@ class S implements Serializable, JsonSerializable {
   }
 
 
-  // ---------------------------------[ Serializable interface ]-------------------------------- //
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[ Serializable interface ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
   // Serializable::serialize()
   function serialize() {
@@ -58,7 +58,7 @@ class S implements Serializable, JsonSerializable {
   }
 
 
-  // -------------------------------[ JsonSerializable interface ]------------------------------ //
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[ JsonSerializable interface ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
   // JsonSerializable::JsonSerialize()
   function JsonSerialize() {
@@ -66,7 +66,7 @@ class S implements Serializable, JsonSerializable {
   }
 
 
-  // --------------------------------------[ Conversions ]-------------------------------------- //
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[ Conversions ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
   // Creates an instance of S from a array of chars.
   static function fromCharArray(array $array) {
@@ -96,9 +96,7 @@ class S implements Serializable, JsonSerializable {
   // Converts string to an array of chars.
   function toCharArray() {
     $result = $this->splitRegex("/(?<!^)(?!$)/u");
-    return $result[0] !== ''
-      ? $result
-      : array();
+    return $result[0] !== '' ? $result : array();
   }
 
   // Converts string to an array of Unicode points.
@@ -117,7 +115,7 @@ class S implements Serializable, JsonSerializable {
   }
 
 
-  // -------------------------------------[ Basic methods ]------------------------------------- //
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[ Basic methods ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
   // Capitalizes the first character of a string.
   function capitalize() {
@@ -344,7 +342,7 @@ class S implements Serializable, JsonSerializable {
   }
 
 
-  // --------------------------------------[ Test methods ]------------------------------------- //
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[ Test methods ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
   // Tests if string is alphanumeric.
   function isAlnum($unicode = true) {
@@ -407,7 +405,7 @@ class S implements Serializable, JsonSerializable {
   }
 
 
-  // ----------------------------------[ Whitespace functions ]--------------------------------- //
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[ Whitespace functions ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
   // Converts all adjacent whitespace characters to a single space.
   function collapseWhitespace() {
@@ -466,7 +464,7 @@ class S implements Serializable, JsonSerializable {
   }
 
 
-  // -------------------------------[ Regular expression methods ]------------------------------ //
+  // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[ Regular expression methods ]~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ //
 
   // Counts the occurrences of $regex in string.
   function countRegex($regex) {
