@@ -689,6 +689,27 @@ class S implements Serializable, JsonSerializable
             $callback($index, $matches);
         }
     }
+    
+    // Camelizes the string.
+	function camelize() {
+		return $this
+			->replaceRegexCallback('/([-_])([a-z])/', function ($match) {
+				return S($match[2])->upper()->s;
+			});
+	}
+    
+	// Underscorizes the string.
+	function underscorize() {
+		return $this
+			->replaceRegex('/([a-z0-9])([A-Z])/', '\1_\2')
+			->replaceRegex('/([a-z0-9])-([a-z])/', '\1_\2')
+			->upper();
+	}
+    
+	// Capitalizes the first character of a string.
+	function capitalize() {
+		return $this->slice(0, 1)->title()->concat($this->slice(1));
+	}
 
     // Throw a regex error
 
