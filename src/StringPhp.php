@@ -253,13 +253,6 @@ class S implements Serializable, JsonSerializable
         return json_encode($this);
     }
 
-    // Returns true if strings are equal, false otherwise, ignoring case.
-
-    function capitalize()
-    {
-        return $this->slice(0, 1)->title()->concat($this->slice(1));
-    }
-
     // Finds position of the first occurrence of a substr, or -1 if not found.
 
     function title()
